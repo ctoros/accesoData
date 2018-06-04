@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>confirma Salida</title>
+    </head>
+    <body>
+        <h1>Confirmar usuario</h1>
+        
+        
+                  
+     
+
+        
+        <table border="2">
+            <thead>
+                <tr>
+                    
+                    <th>RUT</th>
+                    <th>NOMBRE</th>
+                    <th>APELLIDO</th>
+                    <th>Fecha Ingreso</th>
+                    <th>EMPRESA</th>
+                    <th>CLIENTE A TRABAJAR</th>
+                    <th>ACTIVIDAD</th>
+                    <th>Hora Salida</th>
+                    <th>Registrar Salida</th>
+
+                </tr>
+            </thead>
+            
+            <tbody>
+                
+                 <%
+                    try
+                    {
+                        
+                    dao.PersonaDAO personaDAO = new dao.PersonaDAO();
+                    
+                    for(entity.Persona tmp: personaDAO.getList())
+                    {
+                      if (tmp.getRut().equalsIgnoreCase(request.getParameter("txtRut"))) {
+                           if (tmp.getHorasalida() == null) {
+                                    
+                                
+                                
+                            
+                 %>
+                
+                <tr>
+                
+                    <td><%= tmp.getRut()%>  </td>
+                    <td><%= tmp.getNombre() %></td>
+                    <td><%= tmp.getApellido() %></td>
+                    <td><%= tmp.getFechahoraingreso()%></td>
+                    <td><%= tmp.getEmpresa()%></td>
+                    <td><%= tmp.getClienteatrabajar()%></td>
+                    <td><%= tmp.getActividad()%></td>
+                    <td><%= request.getParameter("hora")%></td>
+                    <td><a href="Salida?update=<%= tmp.getId()%>">Confirmar Salida</a></td>
+            
+                </tr>
+                
+                 <%
+                   }
+                    }
+                     }
+                    }catch(Exception e)
+                    {
+                        out.println(e.getMessage());
+                    }
+                      
+                 %>
+            </tbody>
+        </table>
+            <br>
+            
+        
+  
+        
+    
+    </body>
+</html>
