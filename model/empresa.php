@@ -1,6 +1,6 @@
 <?php
 
-include("../service/connect.php");
+include_once("../service/connect.php");
 
 class Empresa {
 
@@ -33,7 +33,7 @@ class Empresa {
         $db = new DataBase();
         $conn = $db->connect();
         if ($conn) {
-            $sql = "SELECT * FROM empresa";
+            $sql = "SELECT * FROM empresa order by descripcionempresa";
             if ($conn->query($sql)) {
                 $rs = $conn->query($sql);
                 while ($fila = mysqli_fetch_assoc($rs)) {

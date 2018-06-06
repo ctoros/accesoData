@@ -1,6 +1,6 @@
 <?php
 
-include("../service/connect.php");
+include_once("../service/connect.php");
 
 class Persona {
 
@@ -49,12 +49,47 @@ class Persona {
     function setActividad($actividad) {
         $this->actividad = $actividad;
     }
+    function getId() {
+        return $this->id;
+    }
 
-    function save() {
+    function getRut() {
+        return $this->rut;
+    }
+
+    function getNombre() {
+        return $this->nombre;
+    }
+
+    function getApellido() {
+        return $this->apellido;
+    }
+
+    function getFechahoraingreso() {
+        return $this->fechahoraingreso;
+    }
+
+    function getHorasalida() {
+        return $this->horasalida;
+    }
+
+    function getEmpresa() {
+        return $this->empresa;
+    }
+
+    function getClienteatrabajar() {
+        return $this->clienteatrabajar;
+    }
+
+    function getActividad() {
+        return $this->actividad;
+    }
+
+        function save() {
         $db = new DataBase();
         $conn = $db->connect();
         if ($conn) {
-            $sql = "INSERT INTO persona ( rut, nombre, apellido, empresa, clienteatrabajar, actividad)"
+            $sql = "INSERT INTO persona (rut, nombre, apellido, empresa, clienteatrabajar, actividad)"
                     . " VALUES ('" . $this->rut . "', '" . $this->nombre . "', '" . $this->apellido . "', "
                     . "'" . $this->empresa . "', '" . $this->clienteatrabajar . "', '" . $this->actividad . "')";
             if ($conn->query($sql) === TRUE) {
@@ -64,7 +99,7 @@ class Persona {
             }
         }
     }
-
+//    SELECT * FROM `persona` WHERE `horasalida` IS NULL
 //    function listUsers() {
 //        $users = [];
 //        $db = new DataBase();
@@ -89,29 +124,30 @@ class Persona {
 //        echo "no entra";
 //    }
 
-    function getUserById($idPersona) {
+    function getPersonByRut($rutPersona) {
         $personas = [];
         $db = new DataBase();
         $conn = $db->connect();
         if ($conn) {
-            $sql = "SELECT * FROM persona WHERE id ='" . $idPersona . "' ";
-            echo $idPersona;
+//            $sql = "SELECT * FROM persona WHERE id ='" . $idPersona . "' ";
+            $sql = "SELECT * FROM persona WHERE rut LIKE '".$rutPersona."' AND fechasalida IS NULL";
+//            echo $idPersona;
             if ($conn->query($sql)) {
                 $resp = $conn->query($sql);
-                while ($fila = mysqli_fetch_assoc($resp)) {
-                    $persona = new Persona();
-                    $persona->setId($fila['id']);
-                    $persona->setNombre($fila['rut']);
-                    $persona->setValor($fila['nombre']);
-                    $persona->setValor($fila['apellido']);
-                    $persona->setValor($fila['fechahoraingreso']);
-                    $persona->setValor($fila['horasalida']);
-                    $persona->setValor($fila['empresa']);
-                    $persona->setValor($fila['clienteatrabajar']);
-                    $persona->setValor($fila['actividad']);
-                    array_push($personas, $persona);
+                $fila = mysqli_fetch_assoc($resp);
+                $p = new Persona();
+                $p->setActividad($fila['actividad']);
+                $p->setId($fila['id']);
+//                echo "aqi fila:", $fila;
+                $sql = "UPDATE persona SET actividad = '".$p->getActividad()."agregar"."' WHERE id = '".$p->getId()."' ";
+                if ($conn->query($sql)) {
+                    
+//                    echo "aqui actividad: ",$p->getActividad();
+//                    echo "  aqui id:  ",$p->getId(),"   finid  ";
+                    return $fila;
                 }
-                return $personas;
+//                UPDATE `persona` SET `actividad` = 'revisi on' WHERE `id` = 1043;
+                
             }
         }
     }

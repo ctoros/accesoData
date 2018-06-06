@@ -1,6 +1,6 @@
 <?php
 
-include("../model/empresa.php");
+include_once("../model/empresa.php");
 
 $empresa = new Empresa();
 $empresas = Array();
